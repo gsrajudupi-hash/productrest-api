@@ -93,7 +93,8 @@ public class SecurityConfig {
                 ).permitAll()
 
 //                // Public product listing, retrieval and search
-//                .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
+//               .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
+//               .requestMatchers(HttpMethod.GET, "/api/search/**").permitAll()
 //                .requestMatchers(HttpMethod.POST, "/api/products/**").permitAll()
 //                .requestMatchers(HttpMethod.PUT, "/api/products/**").permitAll()
 //                .requestMatchers(HttpMethod.DELETE, "/api/products/**").permitAll()

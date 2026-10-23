@@ -13,6 +13,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.ltm.training.producthive.auth.dto.AuthResponse;
 import com.ltm.training.producthive.auth.dto.LoginRequest;
 import com.ltm.training.producthive.auth.dto.RegisterRequest;
+import com.ltm.training.producthive.model.Address;
 import com.ltm.training.producthive.model.Dealer;
 import com.ltm.training.producthive.repository.DealerRepository;
 import com.ltm.training.producthive.security.JwtService;
@@ -40,35 +41,75 @@ public class AuthService {
 		this.expirationMs = expirationMs;
 	}
 
+//	@Transactional
+//	public AuthResponse register(RegisterRequest request) {
+//
+//		if (dealerRepository.existsByEmail(request.email())) {
+//			throw new ResponseStatusException(
+//					HttpStatus.CONFLICT,
+//					"Email is already registered");
+//		}
+//
+//		Dealer dealer = new Dealer();
+//
+//		dealer.setFname(request.fname());
+//		dealer.setLname(request.lname());
+//		dealer.setEmail(request.email());
+//		dealer.setPhoneNo(request.phoneNo());
+//		dealer.setDob(request.dob());
+//
+//		// Hash the password before storing it.
+//		dealer.setPassword(
+//				passwordEncoder.encode(request.password()));
+//
+//		dealerRepository.save(dealer);
+//
+//		String token = jwtService.generateToken(dealer.getEmail());
+//
+//		return new AuthResponse(
+//				token, "Bearer", expirationMs);
+//	}
+
 	@Transactional
 	public AuthResponse register(RegisterRequest request) {
 
-		if (dealerRepository.existsByEmail(request.email())) {
-			throw new ResponseStatusException(
-					HttpStatus.CONFLICT,
-					"Email is already registered");
-		}
+	    if (dealerRepository.existsByEmail(request.email())) {
+	        throw new ResponseStatusException(
+	            HttpStatus.CONFLICT,
+	            "Email is already registered"
+	        );
+	    }
 
-		Dealer dealer = new Dealer();
+	    Dealer dealer = new Dealer();
 
-		dealer.setFname(request.fname());
-		dealer.setLname(request.lname());
-		dealer.setEmail(request.email());
-		dealer.setPhoneNo(request.phoneNo());
-		dealer.setDob(request.dob());
+	    dealer.setFname(request.fname());
+	    dealer.setLname(request.lname());
+	    dealer.setEmail(request.email());
+	    dealer.setPhoneNo(request.phoneNo());
+	    dealer.setDob(request.dob());
 
-		// Hash the password before storing it.
-		dealer.setPassword(
-				passwordEncoder.encode(request.password()));
+	    dealer.setPassword(
+	        passwordEncoder.encode(request.password())
+	    );
 
-		dealerRepository.save(dealer);
+	    Address address = new Address();
 
-		String token = jwtService.generateToken(dealer.getEmail());
+	    address.setStreet(request.address().street());
+	    address.setCity(request.address().city());
+	    address.setPincode(request.address().pincode());
 
-		return new AuthResponse(
-				token, "Bearer", expirationMs);
+	    // Set both sides of the bidirectional relationship.
+	    address.setDealer(dealer);
+	    dealer.setAddress(address);
+
+	    // CascadeType.ALL saves the associated address.
+	    dealerRepository.save(dealer);
+
+	    String token = jwtService.generateToken(dealer.getEmail());
+
+	    return new AuthResponse(token, "Bearer", expirationMs);
 	}
-
+	
 	public AuthResponse login(LoginRequest request) {
 
 		Authentication authentication =

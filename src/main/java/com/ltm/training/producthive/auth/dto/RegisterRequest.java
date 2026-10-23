@@ -2,6 +2,7 @@ package com.ltm.training.producthive.auth.dto;
 
 import java.time.LocalDate;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -12,25 +13,31 @@ import jakarta.validation.constraints.Size;
  * carefully designed password-length policy that accounts for UTF-8 byte length.
  */
 public record RegisterRequest(
-		@NotBlank
-		String fname,
+		 @NotBlank(message = "First name cannot be blank")
+		    String fname,
 
-		@NotBlank
-		String lname,
+		    @NotBlank(message = "Last name cannot be blank")
+		    String lname,
 
-		@Email
-		@NotBlank
-		String email,
+		    @Email(message = "Enter a valid email address")
+		    @NotBlank(message = "Email cannot be blank")
+		    String email,
 
-		@NotBlank
-		@Size(min = 8, max = 72)
-		String password,
+		    @NotBlank(message = "Password cannot be blank")
+		    @Size(min = 8, max = 72,
+		          message = "Password must be between 8 and 72 characters")
+		    String password,
 
-		@NotBlank
-		String phoneNo,
+		    @NotBlank(message = "Phone number cannot be blank")
+		    String phoneNo,
 
-		@NotNull
-		LocalDate dob
+		    @NotNull(message = "Date of birth is required")
+		    LocalDate dob,
+
+		    @NotNull(message = "Address is required")
+		    @Valid
+		    AddressRequest address
+
 
 		) {
 
