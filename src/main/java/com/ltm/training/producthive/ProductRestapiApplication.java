@@ -2,6 +2,7 @@ package com.ltm.training.producthive;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 
 /*
  * Spring Boot RESTful Web Services for Product Management System using 
@@ -23,6 +24,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * It's a great way to get started with Spring Boot development.
  */
 @SpringBootApplication
+@ConfigurationPropertiesScan
 public class ProductRestapiApplication {
 
 	public static void main(String[] args) {

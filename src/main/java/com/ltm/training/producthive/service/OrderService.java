@@ -20,7 +20,6 @@ import com.ltm.training.producthive.model.Order;
 import com.ltm.training.producthive.model.OrderDetails;
 import com.ltm.training.producthive.repository.OrderRepository;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 

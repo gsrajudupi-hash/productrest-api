@@ -32,8 +32,8 @@ public class OrderDetails {
       fetch = FetchType.LAZY means that the associated Order is loaded on-demand.
 	 */
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="order_id")
-	@JsonBackReference //To handle bi-directional mapping
+	@JoinColumn(name="order_id") //Foreign key
+	@JsonBackReference //To backside of relationship for Jack son Serialization
 	private Order order;
 
 }

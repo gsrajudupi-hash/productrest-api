@@ -14,6 +14,8 @@ public interface DealerRepository extends JpaRepository<Dealer, Long>{
 	//CustomMethod to fetch Object based on email - non id field
 	public Optional<Dealer> findByEmail(String email);
 	
+	 boolean existsByEmail(String email);
+	
 	public Optional<Dealer> findDistinctByLnameAndPhoneNo(String lname,String phone);
 	
 	/*

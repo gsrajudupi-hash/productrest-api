@@ -83,7 +83,7 @@ public class OrderController {
         return ResponseEntity.ok(orders);
     }
 
-	
+	//http://localhost:8088/producthive/api/orders/summary?minTotal=1000
 	@GetMapping("/summary")
 	public List<OrderSummary> getOrderSummary(
 	        @RequestParam(defaultValue = "0.00")
